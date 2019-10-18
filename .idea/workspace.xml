@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="30e08e31-b546-4a0c-b5e7-23fbc0b294f7" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/stockAnalysis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/stockAnalysis.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DualThrustStrategy.py" beforeDir="false" afterPath="$PROJECT_DIR$/DualThrustStrategy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JointQuantCode.py" beforeDir="false" afterPath="$PROJECT_DIR$/JointQuantCode.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/Stock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/filtered_stocks_MACD.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/filtered_stocks_MACD.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/filtered_stocks_ROE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/filtered_stocks_ROE.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/stockInfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/stockInfo.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/process.py" beforeDir="false" afterPath="$PROJECT_DIR$/process.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/result/dual_thrust_MACD.csv" beforeDir="false" afterPath="$PROJECT_DIR$/result/dual_thrust_MACD.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/result/dual_thrust_ROE.csv" beforeDir="false" afterPath="$PROJECT_DIR$/result/dual_thrust_ROE.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -80,7 +69,7 @@
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../stockAnalysisWYT" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -385,12 +374,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/preprocess.py</url>
-          <line>234</line>
+          <line>237</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/preprocess.py</url>
-          <line>241</line>
+          <line>244</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -400,12 +389,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/preprocess.py</url>
-          <line>261</line>
+          <line>264</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/preprocess.py</url>
-          <line>253</line>
+          <line>256</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

@@ -174,9 +174,12 @@ def downloadSharePrice(code, years=7):
         print("{} 下载失败".format(code))
         return
 
-    if len(df) < 1:
-        print("{} 下载失败".format(code))
+    try:
+        if len(df) < 1:
+            print("{} 下载失败".format(code))
         return
+    except TypeError:
+        print("{} 下载失败".format(code))
 
     # 新建Adj Close字段，生成pyalgotrade数据的时候用，当生成历史数据的时候需要将其注释掉
     # df["Adj Close"] = df.close
