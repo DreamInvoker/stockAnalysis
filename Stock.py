@@ -37,10 +37,14 @@ class Stock(object):
         self.zcfzb_year_path = os.path.join('data/zcfzb/year/', filename)
 
         # 输出当前处理的股票
-        # self.print_stock()
+        self.print_stock()
         # 获取stockstats的统计类，此类用于计算各项股价指标,
         # https://github.com/jealous/stockstats
-        self.stat = stockstats.StockDataFrame.retype(self.getHisPriceData(startTime=start_time, endTime=end_time))
+        his = self.getHisPriceData(startTime=start_time, endTime=end_time)
+        if his is not None:
+            self.stat = stockstats.StockDataFrame.retype(his)
+        else:
+            self.stat = None
 
     def print_stock(self):
         print('processing stock code : {} , stock name : {} , stock industry : {} . '.format(self.code, self.name,
@@ -73,7 +77,10 @@ class Stock(object):
 
         if not (startTime and endTime):
             # print('there is no startTime and endTime set.')
-            price = pandas.read_csv(self.hist_price_path)
+            try:
+                price = pandas.read_csv(self.hist_price_path)
+            except:
+                return None
             return price.sort_values(by='date')
         else:
             # TODO 通过时间筛选历史股价数据
@@ -268,7 +275,7 @@ if __name__ == '__main__':
     # stock.pltShow(stock.closeDelta())
 
     # 3、计算n天差
-    # stock.pltShow(stock.n_d())hence
+    # stock.pltShow(stock.n_d())
 
     # 4、计算n天开盘价百分比
     # stock.pltShow(stock.n_openChangeInPercent())

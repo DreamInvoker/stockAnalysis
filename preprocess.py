@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
     @Author: zengshuang61@gmail.com
 """
 
+
 def getHTMLText(url, code="utf-8"):
     try:
         r = requests.get(url)
@@ -21,6 +22,7 @@ def getHTMLText(url, code="utf-8"):
         return r.text
     except:
         return ""
+
 
 def getStockCodeAndName(file_name='data/stocks.json'):
     """
@@ -150,9 +152,9 @@ def downloadSharePrice(code, years=7):
     if years == 0:
         return
     # 存储路径，pyalgotrade处理的数据
-    # save_path = os.path.join("data/share_price_processed/", "{}.csv".format(code))
+    save_path = os.path.join("data/share_price_processed/", "{}.csv".format(code))
     # 历史数据存储的路径
-    save_path = os.path.join("data/share_price/", "{}.csv".format(code))
+    # save_path = os.path.join("data/share_price/", "{}.csv".format(code))
     # 判断之前是否下载过
     if os.path.exists(save_path):
         print("{} 已下载".format(code))
@@ -161,40 +163,36 @@ def downloadSharePrice(code, years=7):
     now = datetime.datetime.now()
     start_time = now - datetime.timedelta(days=years * 365)
     # start = start_time.strftime("%Y-%m-%d")
-    start = "2011-05-31"
-    end_time = "2018-05-28"
+    start = "2000-11-21"
+    end_time = "2019-11-26"
     try:
         print("{} 正在下载过去{}年的股价数据".format(code, years))
         # 注释掉的为pyalgotrade处理的数据
-        # df = ts.get_k_data(code, start=start,end=end_time)
+        df = ts.get_k_data(code, start=start, end=end_time)
         # 下面的是tushare的历史股价数据，近三年的股价数据，因为tushare的get_hist_data接口只提供近三年的数据
-        df = ts.get_hist_data(code, start=start, end=end_time)
+        # df = ts.get_hist_data(code, start=start, end=end_time)
         print("{} 下载完成".format(code))
+        if len(df) < 1:
+            print("{} 下载失败".format(code))
+            return
     except:
         print("{} 下载失败".format(code))
         return
 
-    try:
-        if len(df) < 1:
-            print("{} 下载失败".format(code))
-        return
-    except TypeError:
-        print("{} 下载失败".format(code))
-
     # 新建Adj Close字段，生成pyalgotrade数据的时候用，当生成历史数据的时候需要将其注释掉
-    # df["Adj Close"] = df.close
+    df["Adj Close"] = df.close
 
     # 下面两行用来获取历史数据
-    df['code'] = code
-    df.sort_index()
+    # df['code'] = code
+    # df.sort_index()
 
     # 将tushare下的数据的字段保存为pyalgotrade所要求的数据格式，生成pyalgotrade数据的时候用，当生成历史数据的时候需要将其注释掉
-    # df.columns = ["Date", "Open", "Close", "High", "Low", "Volume", "code", "Adj Close"]
+    df.columns = ["Date", "Open", "Close", "High", "Low", "Volume", "code", "Adj Close"]
 
     # 将数据保存成本地csv文件，生成pyalgotrade用
-    # df.to_csv(save_path, index=False)
+    df.to_csv(save_path, index=False)
     # 生成历史数据时用
-    df.to_csv(save_path, index=True)
+    # df.to_csv(save_path, index=True)
 
 
 def downloadSharePriceOfCodes(code_list):
@@ -257,8 +255,8 @@ def getStockInfo(lst, fpath):
             List.append(stock)
             soup = BeautifulSoup(html, 'html.parser')
             stock = soup.find('div', attrs={'class': 'cwzb'}).find_all('tbody')[0]
-            name = stock.find_all('b')[0]
-            List.append(name.text)
+            # name = stock.find_all('a')
+            # List.append(name.text)
             keyList = stock.find_all('td')[1:9]
             for i in range(len(keyList)):
                 List.append(keyList[i].text.split('%')[0])
@@ -300,8 +298,8 @@ if __name__ == '__main__':
     '''
     获取每支股票最近7年的股价数据，或者注释掉一些代码获取近三年内的历史数据【2018.6月10日新增】
     来源：tushare
-    下载时间：2018年5月29日
-    股价时间跨度：2011年5月31日—2018年5月28日
+    下载时间：2019年10月17日
+    股价时间跨度：2010年10月1日—2019年10月1日
     '''
     downloadSharePriceOfCodes(stock_code_list)
     # 查看哪些股票的股价数据没有被下载，并重新下载

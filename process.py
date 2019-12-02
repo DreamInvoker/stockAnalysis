@@ -11,6 +11,7 @@ from preprocess import getStockCodeAndName
     @Author: zengshuang61@gmail.com
 """
 
+
 def sortDictByValueDesc(dict):
     return sorted(dict.items(), key=lambda d: d[1], reverse=True)
 
@@ -128,7 +129,6 @@ def stockCode2NameAndIndustry(dict_stocks):
         code2Name_dict[code] = name
         code2Industry_dict[code] = industry
     return code2Name_dict, code2Industry_dict
-
 
 
 if __name__ == '__main__':

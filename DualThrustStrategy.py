@@ -14,7 +14,9 @@ from pyalgotrade.stratanalyzer import trades
 from Stock import *
 from preprocess import getStockCodeAndName
 from process import stockCode2NameAndIndustry
+from pandas.plotting import register_matplotlib_converters
 
+register_matplotlib_converters()
 """
     通过PyAlgo官网教程提供的API进行策略的实现并进行回测（backtest）
     官方教程：http://gbeced.github.io/pyalgotrade/docs/v0.18/html/index.html
@@ -167,7 +169,7 @@ class MyStrategy(strategy.BacktestingStrategy):
                 self.__position.exitMarket()
 
 
-def runStrategy(code, csv_file, stdout=False):
+def runStrategy(code, csv_file, stdout=True):
     """
         策略回测
     :param code:    股票代码
@@ -278,7 +280,11 @@ def AnalyzeByDualThrust(path, Index='ROE'):
             info = line.split('\t')
             code_lis.append(info[0])
     for code in code_lis:
-        newStock = Stock(stock_code=code, stock_name=code2Name_dict[code], stock_industry=code2Industry_dict[code])
+        try:
+            newStock = Stock(stock_code=code, stock_name=code2Name_dict[code], stock_industry=code2Industry_dict[code])
+        except KeyError:
+            print('股票代码为 {} 已经退市，略过！'.format(code))
+            continue
         csv_file = os.path.join(download_dir, "{}.csv".format(code))
         # 获取近7年历史数据，格式为PyAlgo要求的数据格式，可以在这里调整要获取的时间范围[startTime,endTime]
         df = newStock.getPriceData(startTime=None, endTime=None)
@@ -287,8 +293,13 @@ def AnalyzeByDualThrust(path, Index='ROE'):
         startTime = df.Date.iloc[0]
         endTime = df.Date.iloc[-1]
         code = os.path.basename(csv_file)[:6]
-        result, shareRatio, cumReturn, maxDrawdown, longestDrawDownDuration, tradeCount, profitableCount, unprofitableCount = runStrategy(
-            code, csv_file)
+
+        try:
+            result, shareRatio, cumReturn, maxDrawdown, longestDrawDownDuration, tradeCount, profitableCount, unprofitableCount = runStrategy(
+                code, csv_file)
+        except:
+            print('error {}!'.format(code))
+            continue
         ret_dict["code"].append(code)
         ret_dict["startTime"].append(startTime)
         ret_dict["endTime"].append(endTime)
@@ -320,10 +331,10 @@ def testOneStock(code):
 
 
 if __name__ == '__main__':
-    # 根据MACD排序后的股票进行Dual Thrust策略分析，根据PyAlgo文档说明，起始资金为10万美元
-    AnalyzeByDualThrust('data/filtered_stocks_MACD.txt', Index='MACD')
-    # 根据ROE排序后的股票进行Dual Thrust策略分析，根据PyAlgo文档说明，起始资金为10万美元
-    AnalyzeByDualThrust('data/filtered_stocks_ROE.txt')
+    # 根据MACD排序后的股票进行Dual Thrust策略分析，根据PyAlgo文档说明，起始资金为100万美元
+    # AnalyzeByDualThrust('data/filtered_stocks_MACD.txt', Index='MACD')
+    # 根据ROE排序后的股票进行Dual Thrust策略分析，根据PyAlgo文档说明，起始资金为100万美元
+    # AnalyzeByDualThrust('data/filtered_stocks_ROE.txt')
 
-    # 可以测试单个股票
-    # testOneStock('600230')
+    # 可以测试单个股票，起始资金为100万美元
+    testOneStock('600230')

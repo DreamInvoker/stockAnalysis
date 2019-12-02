@@ -7,7 +7,7 @@ This project is to analyse the 3520 stocks of A shares.
 ```commandline
     pip3 install tushare //财经数据接口
     pip3 install requests //简单爬虫
-    pip3 install BeautifulSoup //html页面解析
+    pip3 install BeautifulSoup //html页面解析 如果Python3下不行就下BeautifulSoup4这个包
     pip3 install multiprocessing //单核多线程处理一些流程
     pip3 install matplotlib  //画图分析
     pip3 install pandas  //数据统计与处理
