@@ -152,9 +152,9 @@ def downloadSharePrice(code, years=7):
     if years == 0:
         return
     # 存储路径，pyalgotrade处理的数据
-    save_path = os.path.join("data/share_price_processed/", "{}.csv".format(code))
+    # save_path = os.path.join("data/share_price_processed/", "{}.csv".format(code))
     # 历史数据存储的路径
-    # save_path = os.path.join("data/share_price/", "{}.csv".format(code))
+    save_path = os.path.join("data/share_price/", "{}.csv".format(code))
     # 判断之前是否下载过
     if os.path.exists(save_path):
         print("{} 已下载".format(code))
@@ -168,9 +168,9 @@ def downloadSharePrice(code, years=7):
     try:
         print("{} 正在下载过去{}年的股价数据".format(code, years))
         # 注释掉的为pyalgotrade处理的数据
-        df = ts.get_k_data(code, start=start, end=end_time)
+        #df = ts.get_k_data(code, start=start, end=end_time)
         # 下面的是tushare的历史股价数据，近三年的股价数据，因为tushare的get_hist_data接口只提供近三年的数据
-        # df = ts.get_hist_data(code, start=start, end=end_time)
+        df = ts.get_hist_data(code, start=start, end=end_time)
         print("{} 下载完成".format(code))
         if len(df) < 1:
             print("{} 下载失败".format(code))
@@ -180,19 +180,19 @@ def downloadSharePrice(code, years=7):
         return
 
     # 新建Adj Close字段，生成pyalgotrade数据的时候用，当生成历史数据的时候需要将其注释掉
-    df["Adj Close"] = df.close
+    # df["Adj Close"] = df.close
 
     # 下面两行用来获取历史数据
-    # df['code'] = code
-    # df.sort_index()
+    df['code'] = code
+    df.sort_index()
 
     # 将tushare下的数据的字段保存为pyalgotrade所要求的数据格式，生成pyalgotrade数据的时候用，当生成历史数据的时候需要将其注释掉
-    df.columns = ["Date", "Open", "Close", "High", "Low", "Volume", "code", "Adj Close"]
+    # df.columns = ["Date", "Open", "Close", "High", "Low", "Volume", "code", "Adj Close"]
 
     # 将数据保存成本地csv文件，生成pyalgotrade用
-    df.to_csv(save_path, index=False)
+    # df.to_csv(save_path, index=False)
     # 生成历史数据时用
-    # df.to_csv(save_path, index=True)
+    df.to_csv(save_path, index=True)
 
 
 def downloadSharePriceOfCodes(code_list):
@@ -281,22 +281,13 @@ if __name__ == '__main__':
         if not os.path.exists(path):
             mkdir(path)
 
-    # 获取3520支股票代码，名称及所属行业
+    # 获取3500+支股票代码，名称及所属行业
     dict_stocks = getStockCodeAndName()
     stock_code_list = dict_stocks['code']
     print("一共{}支股票！".format(len(stock_code_list)))
 
     '''
-    获取每支股票的三大财报数据（包括年度和季度）
-    来源：网易财经
-    下载时间：2018年5月16日—2018年5月17日
-    年度财报截止日期：2017年12月31日
-    季度财报截止日期：2018年3月31日
-    '''
-    getFinanceDataOfCodes(stock_code_list)
-
-    '''
-    获取每支股票最近7年的股价数据，或者注释掉一些代码获取近三年内的历史数据【2018.6月10日新增】
+    获取每支股票最近7年的股价数据，或者注释掉一些代码获取近三年内的历史数据
     来源：tushare
     下载时间：2019年10月17日
     股价时间跨度：2010年10月1日—2019年10月1日
@@ -306,7 +297,17 @@ if __name__ == '__main__':
     isExitOfCodes(stock_code_list)
 
     '''
+    获取每支股票的三大财报数据（包括年度和季度）
+    来源：网易财经
+    年度财报截止日期：2017年12月31日
+    季度财报截止日期：2019年11月21日
+    '''
+    getFinanceDataOfCodes(stock_code_list)
+
+
+
+    '''
     获取每支股票的财务统计数据，包括代码、名称、总市值、净资产、净利润、市盈率(%)、市净率(%)、毛利率(%)、净利率(%)、ROE(%)
     来源：东方财富网个股页面
     '''
-    getStockInfo(stock_code_list, 'data/stockInfo.txt')
+    # getStockInfo(stock_code_list, 'data/stockInfo.txt')
