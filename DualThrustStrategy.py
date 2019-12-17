@@ -337,4 +337,4 @@ if __name__ == '__main__':
     # AnalyzeByDualThrust('data/filtered_stocks_ROE.txt')
 
     # 可以测试单个股票，起始资金为100万美元
-    testOneStock('600230')
+    testOneStock('000599')

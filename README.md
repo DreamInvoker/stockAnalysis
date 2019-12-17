@@ -5,17 +5,17 @@ This project is to analyse the 3520 stocks of A shares.
 
 ## 1. Install Required third-party Package
 ```commandline
-    pip3 install tushare //财经数据接口
-    pip3 install requests //简单爬虫
-    pip3 install BeautifulSoup //html页面解析 如果Python3下不行就下BeautifulSoup4这个包
-    pip3 install multiprocessing //单核多线程处理一些流程
-    pip3 install matplotlib  //画图分析
-    pip3 install pandas  //数据统计与处理
-    pip3 install stockstats  //通过股价源数据生成17种股价指标
-    pip3 install pyalgotrade    //策略分析接口python2.7版本
-    pip3 install pyalgotrade-python3    //策略分析接口python3版本
-    pip3 install slippage   //pyalgotrade依赖的库
-    pip3 install DataAPI   //暂时没有用到  今后做数据的精准评测可以用
+    python3 -m pip install tushare //财经数据接口
+    python3 -m pip install requests //简单爬虫
+    python3 -m pip install BeautifulSoup //html页面解析 如果Python3下不行就下BeautifulSoup4这个包
+    python3 -m pip install multiprocessing //单核多线程处理一些流程
+    python3 -m pip install matplotlib  //画图分析
+    python3 -m pip install pandas  //数据统计与处理
+    python3 -m pip install stockstats  //通过股价源数据生成17种股价指标
+    python3 -m pip install pyalgotrade    //策略分析接口python2.7版本
+    python3 -m pip install pyalgotrade-python3    //策略分析接口python3版本
+    python3 -m pip install slippage   //pyalgotrade依赖的库
+    python3 -m pip install DataAPI   //暂时没有用到  今后做数据的精准评测可以用
 ```
 
 ## 2. Generate Data of stocks
@@ -55,7 +55,13 @@ python3 process.py
 
 ![ROE排序](img/ROE排序图示.png)
 
-## 5.DualThrust Strategy Analyze And backtest
+## 5.Metrics Analysis
+
+```commandline
+python3 Stock.py
+```
+
+## 6.DualThrust Strategy Analyze And backtest
 
 ```commandline
 python3 DualTrustStrategy.py
@@ -72,7 +78,7 @@ python3 DualTrustStrategy.py
 ![DualThrust策略回测结果](img/DualThrust策略下资产组合收益图.png)
 
 
-## 6.聚宽(JointQuant)平台回测
+## 7.聚宽(JointQuant)平台回测
 
 ### Dual Thrust策略回测代码（以600230为例）如下：
 ![聚宽DualThrust策略回测代码](./JointQuantCode.py)

@@ -258,7 +258,6 @@ class Stock(object):
         """
         return self.stat[['close', 'vr', 'vr_6_sma']]
 
-        # TODO 根据股票的三大财报数据进行分析
 
         # TODO 分析财务报表数据
 
@@ -294,7 +293,7 @@ if __name__ == '__main__':
     stock.pltShow(stat)
 
     # 9、BOLL指标
-    # stock.pltShow(stock.BOLL())
+    stock.pltShow(stock.BOLL())
 
     # 10、RSI指标
     # stock.pltShow(stock.RSI())
@@ -319,4 +318,3 @@ if __name__ == '__main__':
 
     # 17、VR，MAVR指标
     # stock.pltShow((stock.VR_MAVR()))
-    print('123')
