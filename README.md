@@ -35,14 +35,6 @@ python3 preprocess.py
 python3 process.py
 ```
 
-- MACD排序
-
-![MACD排序](img/MACD排序图示.png)
-
-- ROE排序
-
-![ROE排序](img/ROE排序图示.png)
-
 ## 4.Metrics Analysis
 
 ```commandline
