@@ -28,20 +28,8 @@ This project is to analyse the 3520 stocks of A shares.
 ```commandline
 python3 preprocess.py
 ```
-## 3. Data Structure Demo：
-> 财务报表数据格式图示：
 
-![财务报表](img/财务报表数据格式图示.png)
-
-> 股价数据数据格式图示：
-
-![股价数据](img/股价数据格式图示.png)
-
-> 财务统计数据格式图示：
-
-![财务统计数据](img/财务统计数据格式图示.png)
-
-## 4.Sort Stocks
+## 3.Sort Stocks
 
 ```commandline
 python3 process.py
@@ -55,13 +43,13 @@ python3 process.py
 
 ![ROE排序](img/ROE排序图示.png)
 
-## 5.Metrics Analysis
+## 4.Metrics Analysis
 
 ```commandline
 python3 Stock.py
 ```
 
-## 6.DualThrust Strategy Analyze And backtest
+## 5.DualThrust Strategy Analyze And backtest
 
 ```commandline
 python3 DualTrustStrategy.py
@@ -72,73 +60,3 @@ python3 DualTrustStrategy.py
 > 输入：第四步筛选出来的股票代码以及他们近7年的股价数据
 
 > 输出：通过Dual Thrust策略进行回测得出每支股票的回测指标（包括夏普率、累计收益率、最大回撤比例、最长回撤周期、最终收益、交易次数占比等等）
-
-回测结果如下图所示：
-
-![DualThrust策略回测结果](img/DualThrust策略下资产组合收益图.png)
-
-
-## 7.聚宽(JointQuant)平台回测
-
-### Dual Thrust策略回测代码（以600230为例）如下：
-![聚宽DualThrust策略回测代码](./JointQuantCode.py)
-
-```commandline
-def initialize(context):
-    g.security = get_index_stocks('000905.XSHG')
-    set_universe(g.security)
-    set_benchmark('600230.XSHG')
-    set_commission(PerTrade(buy_cost=0.0003, sell_cost=0.0013, min_cost=5))
-    
-    
-def handle_data(context, data):
-    stocknum = 50
-    security = g.security
-    # 根据大盘指数进行止损
-    his = attribute_history('600230.XSHG', 10, '1d', 'close')
-    if ((1-float(his['close'][-1]/his['close'][0]))>=0.03):
-        if len(context.portfolio.positions)>0:
-            for stock in list(context.portfolio.positions.keys()):
-                order_target(stock, 0)
-        return
-    # 分配资金
-    if len(context.portfolio.positions) < stocknum:
-        Num = stocknum - len(context.portfolio.positions)
-        Cash = context.portfolio.cash/Num
-    else:
-        Cash = context.portfolio.cash
-    # Buy
-    for stock in security:
-        # 求出持有该股票的仓位，买入没有持仓并符合条件股票
-        position = context.portfolio.positions[stock].amount
-        if position < 100:
-            hist = attribute_history(stock, 3, '1d', ('high','low','close','open'))
-            HH = max(hist['high'][:-1])
-            LC = min(hist['close'][:-1])
-            HC = max(hist['close'][:-1])
-            LL = min(hist['low'][:-1])
-            Open = hist['open'][-1]
-            # 使用第n-1日的收盘价作为当前价
-            current_price = hist['close'][-1]
-            Range = max((HH-LC),(HC-LL))
-            K1 = 0.9
-            BuyLine = Open + K1 * Range
-            if current_price>BuyLine:# and position < 100:
-                order_value(stock, Cash)
-    # Sell
-    for stock in list(context.portfolio.positions.keys()):
-        hist = history(3, '1d', 'close', [stock])
-        case1 = (1-(hist[stock][-1]/hist[stock][0]))>=0.06
-        case2 = (1-(hist[stock][-2]/hist[stock][0]))>=0.08
-        if case1 or case2:
-            order_target(stock, 0)
-
-```
-
-> 回测详情：
-
-
-![聚宽DualThrust策略回测结果](img/聚宽DualThrust策略回测结果.png)
-
-
-![聚宽DualThrust策略回测结果2](img/聚宽DualThrust策略回测结果2.png)
